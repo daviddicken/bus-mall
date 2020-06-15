@@ -1,0 +1,41 @@
+body{
+  background-color: lightgray;
+}
+section{
+  border: solid black 2px;
+  position: relative;
+}
+
+div{
+  border: solid red 2px;
+  width: 33%;
+
+}
+
+img{
+  border: solid blue 2px;
+  width: 90%;
+}
+
+p{
+  border: solid green 2px;
+}
+
+h1{
+  border: dashed grey 2px;
+}
+
+h2{
+  border: dashed gray 2px;
+}
+
+ul{
+  border: solid orange 2px;
+}
+li{
+  border: solid yellow 2px;
+}
+/* ======================================================================================= */
+section> *{
+  float: left;
+}
