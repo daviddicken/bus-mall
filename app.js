@@ -33,10 +33,19 @@ function handleClickOnImg(event)
   if(event.target.tagName === 'IMG') // checks if click happened on a item
   {
     totalClicks++; //                   track of clicks
-    if(totalClicks === maxClicks) //    removes listener if max clicks is reached
+    if(totalClicks === maxClicks) //    run code when max clicks is reached
     {
-      targetId.removeEventListener('click', handleClickOnImg);
+      targetId.removeEventListener('click', handleClickOnImg); // removes listenere
+      
+      var favItemList = document.getElementById('itemTotals'); // get target for ul
+      for(var i in itemsArray) //        run through all items in item array
+      {
+        var listItem = document.createElement('li');
+        listItem.textContent = itemsArray[i].caption + ' was shown ' + itemsArray[i].shown + ' and was selected ' + itemsArray[i].clicks;
+        favItemList.appendChild(listItem);
+      }
     }
+
     var src = event.target.getAttribute('src'); //gets src from img clicked
     for (var i in itemsArray) //                 cycles though items in array
     {
