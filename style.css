@@ -2,7 +2,7 @@ body{
   background-color: lightgray;
 }
 section{
-  border: solid black 2px;
+  /* border: solid black 2px; */
   position: relative;
   overflow: hidden;
   width: 960px;
@@ -11,32 +11,32 @@ section{
 }
 
 div{
-  border: solid red 2px;
+  /* border: solid red 2px; */
 }
 
 img{
-  border: solid blue 2px;
+  /* border: solid blue 2px; */
   margin: auto;
   width: 200px;
 }
 
 p{
-  border: solid green 2px;
+  /* border: solid green 2px; */
 }
 
 h1{
-  border: dashed grey 2px;
+  /* border: dashed grey 2px; */
 }
 
 h2{
-  border: dashed gray 2px;
+  /* border: dashed gray 2px; */
 }
 
 ul{
-  border: solid orange 2px;
+  /* border: solid orange 2px; */
 }
 li{
-  border: solid yellow 2px;
+  /* border: solid yellow 2px; */
 }
 /* ======================================================================================= */
 section> *{
