@@ -2,8 +2,9 @@
 
 //======================= Variables ================================================
 var itemsArray = [];
+// Item.itemsArray = [];
 var totalClicks = 0;
-var maxClicks = 25;
+var maxClicks = 4;
 var picCombosUsed = [];
 var arrayIndex = 0;
 
@@ -15,29 +16,30 @@ function Item(imageSrc, caption)
   this.clicks = 0;
   this.shown = 0;
   itemsArray.push(this);
+  //Item.itemsArray.push(this);
 }
 
 new Item('img/bag.jpg', 'R2-D2 Luggage');
 new Item('img/banana.jpg', 'Banana Slicer');
 new Item('img/bathroom.jpg', 'Potty Tablet Holder');
 new Item('img/boots.jpg', 'Open Toe Rain Boots');
-new Item('img/breakfast.jpg', 'All in One Breakfast Maker');
-new Item('img/bubblegum.jpg', 'Bubblegum Flavored Meatballs');
-new Item('img/chair.jpg', 'Inverted Chair');
-new Item('img/cthulhu.jpg', 'Chulhu Action Figure');
-new Item('img/dog-duck.jpg', 'Duckbill for Dogs');
-new Item('img/dragon.jpg', 'Dragon Meat');
-new Item('img/frosted-cookie.jpg', 'Salmon Cookies!!!');
-new Item('img/pen.jpg', 'Pen-ware');
-new Item('img/pet-sweep.jpg', 'Pet Sweep');
-new Item('img/scissors.jpg', 'Pizza Scissors');
-new Item('img/shark.jpg', 'Shark Sleeping Bag');
-new Item('img/sweep.png', 'Baby Mop');
-new Item('img/tauntaun.jpg', 'Tauntaun Sleeping Bag');
-new Item('img/unicorn.jpg', 'Unicorn Meat');
-new Item('img/usb.gif', 'USB Tentacle');
-new Item('img/water-can.jpg', 'Never Empty Water Can');
-new Item('img/wine-glass.jpg', 'AA members Wine Glass');
+// new Item('img/breakfast.jpg', 'All in One Breakfast Maker');
+// new Item('img/bubblegum.jpg', 'Bubblegum Flavored Meatballs');
+// new Item('img/chair.jpg', 'Inverted Chair');
+// new Item('img/cthulhu.jpg', 'Chulhu Action Figure');
+// new Item('img/dog-duck.jpg', 'Duckbill for Dogs');
+// new Item('img/dragon.jpg', 'Dragon Meat');
+// new Item('img/frosted-cookie.jpg', 'Salmon Cookies!!!');
+// new Item('img/pen.jpg', 'Pen-ware');
+// new Item('img/pet-sweep.jpg', 'Pet Sweep');
+// new Item('img/scissors.jpg', 'Pizza Scissors');
+// new Item('img/shark.jpg', 'Shark Sleeping Bag');
+// new Item('img/sweep.png', 'Baby Mop');
+// new Item('img/tauntaun.jpg', 'Tauntaun Sleeping Bag');
+// new Item('img/unicorn.jpg', 'Unicorn Meat');
+// new Item('img/usb.gif', 'USB Tentacle');
+// new Item('img/water-can.jpg', 'Never Empty Water Can');
+// new Item('img/wine-glass.jpg', 'AA members Wine Glass');
 
 //======================= Event Listeners ============================================
 
@@ -92,7 +94,7 @@ function randomPic()
   newNumbs = checkForDoubles(firstNum, secondNum, thirdNum); // check for doubles
   newNumbs = checkIfUsed(newNumbs[0], newNumbs[1], newNumbs[2]); //check if combination of numbers has been used
   picCombosUsed[arrayIndex] = [newNumbs[0], newNumbs[1], newNumbs[2]]; //add combination used to array
-  //console.log('picCombosUsed..', picCombosUsed);
+  console.log('picCombosUsed..', picCombosUsed);
   arrayIndex++; // increase arry index for above array
   //keeps track of times shown
   itemsArray[newNumbs[0]].shown++;
@@ -106,7 +108,7 @@ function randomPic()
   cap1.textContent = itemsArray[newNumbs[0]].caption;
   cap2.textContent = itemsArray[newNumbs[1]].caption;
   cap3.textContent = itemsArray[newNumbs[2]].caption;
-  //console.log(newNumbs[0], newNumbs[1], newNumbs[2]);
+  console.log(newNumbs[0], newNumbs[1], newNumbs[2]);
 
 
   //============= Not completely confident enough to get rid of code below yet==================================
@@ -139,9 +141,10 @@ function randomPic()
 //--------------------------------------------------------------------------
 function checkIfUsed(num1, num2, num3)
 {
+  //debugger;
   for (var k in picCombosUsed)
   {
-    if((num1 === picCombosUsed[k][0] || num1 === picCombosUsed[k][1], num1 === picCombosUsed[k][2]) && (num2 === picCombosUsed[k][0] || num2 === picCombosUsed[k][1], num2 === picCombosUsed[k][2]) && (num3 === picCombosUsed[k][0] || num3 === picCombosUsed[k][1] || num3 === picCombosUsed[k][2] )) // check numbers against array
+    if((num1 === picCombosUsed[k][0] || num1 === picCombosUsed[k][1] || num1 === picCombosUsed[k][2]) && (num2 === picCombosUsed[k][0] || num2 === picCombosUsed[k][1] || num2 === picCombosUsed[k][2]) && (num3 === picCombosUsed[k][0] || num3 === picCombosUsed[k][1] || num3 === picCombosUsed[k][2] )) // check numbers against array
     {// if number combo has been used get and make sure they aren't doubles
       do
       {
