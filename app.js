@@ -144,7 +144,9 @@ function checkIfUsed(num1, num2, num3)
   //debugger;
   for (var k in picCombosUsed)
   {
-    if((num1 === picCombosUsed[k][0] || num1 === picCombosUsed[k][1] || num1 === picCombosUsed[k][2]) && (num2 === picCombosUsed[k][0] || num2 === picCombosUsed[k][1] || num2 === picCombosUsed[k][2]) && (num3 === picCombosUsed[k][0] || num3 === picCombosUsed[k][1] || num3 === picCombosUsed[k][2] )) // check numbers against array
+    if((num1 === picCombosUsed[k][0] || num1 === picCombosUsed[k][1] || num1 === picCombosUsed[k][2]) && 
+    (num2 === picCombosUsed[k][0] || num2 === picCombosUsed[k][1] || num2 === picCombosUsed[k][2]) && 
+    (num3 === picCombosUsed[k][0] || num3 === picCombosUsed[k][1] || num3 === picCombosUsed[k][2] )) // check numbers against array
     {// if number combo has been used get and make sure they aren't doubles
       do
       {
