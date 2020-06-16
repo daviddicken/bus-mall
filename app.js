@@ -30,22 +30,23 @@ targetId.addEventListener('click', handleClickOnImg); //adding eventListener
 
 function handleClickOnImg(event)
 {
-  if(event.target.tagName === 'IMG')
+  if(event.target.tagName === 'IMG') // checks if click happened on a item
   {
-    totalClicks++;
-    if(totalClicks === maxClicks)
+    totalClicks++; //                   track of clicks
+    if(totalClicks === maxClicks) //    removes listener if max clicks is reached
     {
       targetId.removeEventListener('click', handleClickOnImg);
     }
-    var src = event.target.getAttribute('src');
-    for (var i in itemsArray)
+    var src = event.target.getAttribute('src'); //gets src from img clicked
+    for (var i in itemsArray) //                 cycles though items in array
     {
-      if(itemsArray[i].imageSrc === src)
+      if(itemsArray[i].imageSrc === src) //      compares clicked img with array img
       {
-        itemsArray[i].clicks++;
+        itemsArray[i].clicks++; //               tracks clicks on image
       }
     }
   }
+  randomPic();
 }
 //---------------------------------------------------------------------------
 function randomPic()
@@ -59,14 +60,21 @@ function randomPic()
   var cap1 = document.getElementById('cap1');
   var cap2 = document.getElementById('cap2');
   var cap3 = document.getElementById('cap3');
+  var tempCombo = [];
+  var lastPicCombo = [];
 
+  //wrap everything in a loop to test combos with last combos
   while(firstNum === secondNum || firstNum === thirdNum || secondNum === thirdNum || thirdNum === firstNum)
   {
     firstNum = randomizerForPics(0, itemsArray.length);
     secondNum = randomizerForPics(0, itemsArray.length);
     thirdNum = randomizerForPics(0, itemsArray.length);
   }
-
+  //keeps track of times shown
+  itemsArray[firstNum].shown++;
+  itemsArray[secondNum].shown++;
+  itemsArray[thirdNum].shown++;
+  //changes image and caption
   img1.src = itemsArray[firstNum].imageSrc;
   img2.src = itemsArray[secondNum].imageSrc;
   img3.src = itemsArray[thirdNum].imageSrc;
