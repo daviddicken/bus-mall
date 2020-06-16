@@ -47,11 +47,11 @@ function handleClickOnImg(event)
     }
 
     var src = event.target.getAttribute('src'); //gets src from img clicked
-    for (var i in itemsArray) //                 cycles though items in array
+    for (var j in itemsArray) //                 cycles though items in array
     {
-      if(itemsArray[i].imageSrc === src) //      compares clicked img with array img
+      if(itemsArray[j].imageSrc === src) //      compares clicked img with array img
       {
-        itemsArray[i].clicks++; //               tracks clicks on image
+        itemsArray[j].clicks++; //               tracks clicks on image
       }
     }
   }
@@ -87,9 +87,10 @@ function randomPic()
   img1.src = itemsArray[firstNum].imageSrc;
   img2.src = itemsArray[secondNum].imageSrc;
   img3.src = itemsArray[thirdNum].imageSrc;
-  cap1.src = itemsArray[firstNum].caption;
-  cap2.src = itemsArray[secondNum].caption;
-  cap3.src = itemsArray[thirdNum].caption;
+  // changes picture captions
+  cap1.textContent = itemsArray[firstNum].caption;
+  cap2.textContent = itemsArray[secondNum].caption;
+  cap3.textContent = itemsArray[thirdNum].caption;
 }
 
 //---------------------------------------------------------------------------
