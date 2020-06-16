@@ -4,17 +4,20 @@ body{
 section{
   border: solid black 2px;
   position: relative;
+  overflow: hidden;
+  width: 960px;
+  margin: auto;
+  text-align: center;
 }
 
 div{
   border: solid red 2px;
-  width: 33%;
-
 }
 
 img{
   border: solid blue 2px;
-  width: 90%;
+  margin: auto;
+  width: 200px;
 }
 
 p{
