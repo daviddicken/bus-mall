@@ -1,0 +1,44 @@
+body{
+  background-color: lightgray;
+}
+section{
+  /* border: solid black 2px; */
+  position: relative;
+  overflow: hidden;
+  width: 960px;
+  margin: auto;
+  text-align: center;
+}
+
+div{
+  /* border: solid red 2px; */
+}
+
+img{
+  /* border: solid blue 2px; */
+  margin: auto;
+  width: 200px;
+}
+
+p{
+  /* border: solid green 2px; */
+}
+
+h1{
+  /* border: dashed grey 2px; */
+}
+
+h2{
+  /* border: dashed gray 2px; */
+}
+
+ul{
+  /* border: solid orange 2px; */
+}
+li{
+  /* border: solid yellow 2px; */
+}
+/* ======================================================================================= */
+section> *{
+  float: left;
+}
