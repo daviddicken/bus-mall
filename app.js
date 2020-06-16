@@ -49,12 +49,29 @@ targetId.addEventListener('click', handleClickOnImg); //adding eventListener
 
 function handleClickOnImg(event)
 {
+  totalClicks++; //                   tracks total number of clicks
   // console.log(event);
+  var src = event.target.getAttribute('src'); //gets src from img clicked
+  for (var j in itemsArray) //                 cycles though items in array
+  {
+    if(itemsArray[j].imageSrc === src) //      compares clicked img with array img
+    {
+      itemsArray[j].clicks++; //               tracks clicks on image
+    }
+  }
+
   if(event.target.tagName === 'IMG') // checks if click happened on a item
   {
     if(totalClicks === maxClicks) //    run code when max clicks is reached
     {
       targetId.removeEventListener('click', handleClickOnImg); // removes listenere
+      document.getElementById('img1').style.display='none';
+      document.getElementById('img2').style.display='none';
+      document.getElementById('img3').style.display='none';
+      document.getElementById('cap1').style.display='none';
+      document.getElementById('cap2').style.display='none';
+      document.getElementById('cap3').style.display='none';
+      document.getElementById('theH1').textContent ='The Results of Your Clicking: ';
 
       var favItemList = document.getElementById('itemTotals'); // get target for ul
       for(var i in itemsArray) //        run through all items in item array
@@ -64,16 +81,6 @@ function handleClickOnImg(event)
         favItemList.appendChild(listItem);
       }
     }
-
-    var src = event.target.getAttribute('src'); //gets src from img clicked
-    for (var j in itemsArray) //                 cycles though items in array
-    {
-      if(itemsArray[j].imageSrc === src) //      compares clicked img with array img
-      {
-        itemsArray[j].clicks++; //               tracks clicks on image
-      }
-    }
-    totalClicks++; //                   tracks total number of clicks
     randomPic();
   }
 }
