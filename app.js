@@ -1,13 +1,13 @@
 'use strict';
 
 //======================= Variables ================================================
-var itemsArray = [];
-// Item.itemsArray = [];
+Item.Array = [];
 var totalClicks = 0;
 var maxClicks = 10;
-//var picCombosUsed = [];
-//var arrayIndex = 0;
 var lastNumbers = [];
+var titles = [];
+var clicksArray = [];
+var totalShown = [];
 
 //======================= Constructor's =============================================
 function Item(imageSrc, caption)
@@ -16,8 +16,7 @@ function Item(imageSrc, caption)
   this.caption = caption;
   this.clicks = 0;
   this.shown = 0;
-  itemsArray.push(this);
-  //Item.itemsArray.push(this);
+  Item.Array.push(this);
 }
 
 new Item('img/bag.jpg', 'R2-D2 Luggage');
@@ -47,22 +46,22 @@ new Item('img/wine-glass.jpg', 'AA members Wine Glass');
 var targetId = document.getElementById('pics'); // Targeting section with pics for event listener
 targetId.addEventListener('click', handleClickOnImg); //adding eventListener
 //======================= Functions =================================================
-
+//debugger;
 function handleClickOnImg(event)
 {
-  totalClicks++; //                   tracks total number of clicks
-  // console.log(event);
-  var src = event.target.getAttribute('src'); //gets src from img clicked
-  for (var j in itemsArray) //                 cycles though items in array
-  {
-    if(itemsArray[j].imageSrc === src) //      compares clicked img with array img
-    {
-      itemsArray[j].clicks++; //               tracks clicks on image
-    }
-  }
-
   if(event.target.tagName === 'IMG') // checks if click happened on a item
   {
+    totalClicks++; //                   tracks total number of clicks
+    // console.log(event);
+    var src = event.target.getAttribute('src'); //gets src from img clicked
+    for (var j in Item.Array) //                 cycles though Item. in array
+    {
+      if(Item.Array[j].imageSrc === src) //      compares clicked img with array img
+      {
+        Item.Array[j].clicks++; //               tracks clicks on image
+      }
+    }
+
     if(totalClicks === maxClicks) //    run code when max clicks is reached
     {
       targetId.removeEventListener('click', handleClickOnImg); // removes listenere
@@ -74,23 +73,14 @@ function handleClickOnImg(event)
       document.getElementById('cap3').style.display='none';
       document.getElementById('theH1').textContent ='The Results of Your Clicking: ';
 
-      var favItemList = document.getElementById('itemTotals'); // get target for ul
-      for(var i in itemsArray) //        run through all items in item array
-      {
-        var listItem = document.createElement('li');
-        listItem.textContent = itemsArray[i].caption + ' was shown ' + itemsArray[i].shown + ' and had ' + itemsArray[i].clicks + ' votes.';
-        favItemList.appendChild(listItem);
-      }
+      makeGraph();
     }
+    randomPic();
   }
-  randomPic();
 }
 //---------------------------------------------------------------------------
 function randomPic()
 {
-  // var firstNum = randomizerForPics(0, itemsArray.length); // Get random numbers
-  // var secondNum = randomizerForPics(0, itemsArray.length);
-  // var thirdNum = randomizerForPics(0, itemsArray.length);
   var img1 = document.getElementById('img1'); // get target id's for images and captions
   var img2 = document.getElementById('img2');
   var img3 = document.getElementById('img3');
@@ -102,52 +92,19 @@ function randomPic()
 
   newNumbs = getNumbers(lastNumbers);
   lastNumbers = newNumbs;
-  // newNumbs = checkForDoubles(firstNum, secondNum, thirdNum); // check for doubles
-  // newNumbs = checkIfUsed(newNumbs[0], newNumbs[1], newNumbs[2]); //check if combination of numbers has been used
-  // picCombosUsed[arrayIndex] = [newNumbs[0], newNumbs[1], newNumbs[2]]; //add combination used to array
-  // console.log('picCombosUsed..', picCombosUsed);
-  // arrayIndex++; // increase arry index for above array
   //keeps track of times shown
-  itemsArray[newNumbs[0]].shown++;
-  itemsArray[newNumbs[1]].shown++;
-  itemsArray[newNumbs[2]].shown++;
+  Item.Array[newNumbs[0]].shown++;
+  Item.Array[newNumbs[1]].shown++;
+  Item.Array[newNumbs[2]].shown++;
   //changes image and caption
-  img1.src = itemsArray[newNumbs[0]].imageSrc;
-  img2.src = itemsArray[newNumbs[1]].imageSrc;
-  img3.src = itemsArray[newNumbs[2]].imageSrc;
+  img1.src = Item.Array[newNumbs[0]].imageSrc;
+  img2.src = Item.Array[newNumbs[1]].imageSrc;
+  img3.src = Item.Array[newNumbs[2]].imageSrc;
   // changes picture captions
-  cap1.textContent = itemsArray[newNumbs[0]].caption;
-  cap2.textContent = itemsArray[newNumbs[1]].caption;
-  cap3.textContent = itemsArray[newNumbs[2]].caption;
+  cap1.textContent = Item.Array[newNumbs[0]].caption;
+  cap2.textContent = Item.Array[newNumbs[1]].caption;
+  cap3.textContent = Item.Array[newNumbs[2]].caption;
   console.log(newNumbs[0], newNumbs[1], newNumbs[2]);
-
-
-  //============= Not completely confident enough to get rid of code below yet==================================
-  //===========================================================================================================
-  // while(firstNum === secondNum || firstNum === thirdNum || secondNum === thirdNum || thirdNum === firstNum)
-  // {
-  //   firstNum = randomizerForPics(0, itemsArray.length);
-  //   secondNum = randomizerForPics(0, itemsArray.length);
-  //   thirdNum = randomizerForPics(0, itemsArray.length);
-  // }
- 
-  // Creates a array of array for double checking if picture combo has been ran
-  // picCombosUsed[arrayIndex] = [firstNum, secondNum, thirdNum,];
-  
-  // for (var k in picCombosUsed)
-  // {
-  //   if((firstNum === picCombosUsed[k][0] || firstNum === picCombosUsed[k][1], firstNum === picCombosUsed[k][2]) && (secondNum === picCombosUsed[k][0] || secondNum === picCombosUsed[k][1], secondNum === picCombosUsed[k][2]) && (thirdNum === picCombosUsed[k][0] || thirdNum === picCombosUsed[k][1] || thirdNum === picCombosUsed[k][2] ))
-  //   {
-
-  //     do
-  //     {
-  //       firstNum = randomizerForPics(0, itemsArray.length);
-  //       secondNum = randomizerForPics(0, itemsArray.length);
-  //       thirdNum = randomizerForPics(0, itemsArray.length);
-  //     }
-  //     while(firstNum === secondNum || firstNum === thirdNum || secondNum === thirdNum || thirdNum === firstNum);
-  //   }
-  // }
 }
 //--------------------------------------------------------
 //https://www.tutorialrepublic.com/faq/how-to-check-if-a-value-exists-in-an-array-in-javascript.php
@@ -155,34 +112,229 @@ function getNumbers(lastNums)
 {
   do
   {
-    var num1 = randomizerForPics(0, itemsArray.length);
+    var num1 = randomizerForPics(0, Item.Array.length);
   }while(lastNums.includes(num1));
 
   do
   {
-    var num2 = randomizerForPics(0, itemsArray.length);
+    var num2 = randomizerForPics(0, Item.Array.length);
   }while(num2 === num1 || lastNums.includes(num2));
+
   do
   {
-    var num3 = randomizerForPics(0, itemsArray.length);
+    var num3 = randomizerForPics(0, Item.Array.length);
   }while(num3 === num1 || num3 === num2 || lastNums.includes(num3));
   return [num1, num2, num3];
 }
+//---------------------------------------------------------------------------
+function randomizerForPics(min ,max)
+{
+  return Math.floor(Math.random() * (max - min) + min); //returns a number between min and one less then max
+}
+//----------------------------------------------------------------------------
+function getCaptions()
+{
+  var itemTitles = [];
+  for(var i in Item.Array)
+  {
+    itemTitles.push(Item.Array[i].caption);
+  }
+  return itemTitles;
+}
+//----------------------------------------------------------------------------
+function getClicks()
+{
+  var allClicks = [];
+  for(var i in Item.Array)
+  {
+    allClicks.push(Item.Array[i].clicks);
+  }
+  return allClicks;
+}
+//---------------------------------------------------------------------------
+function getShown()
+{
+  var timesShown = [];
+  for(var i in Item.Array)
+  {
+    timesShown.push(Item.Array[i].shown);
+  }
+  return timesShown;
+}
+//------------------------------------------------------------------
+function makeGraph()
+{
+  titles = getCaptions();
+  clicksArray = getClicks();
+  totalShown = getShown();
 
+  var ctx = document.getElementById('clickChart').getContext('2d');
+  var myChart = new Chart(ctx,
+    {
+      type: 'bar',
+      data: {
+        labels: titles,
+        datasets: [{
+          label: 'Clicks',
+          data: clicksArray,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+            'red','red','red','red','red',
+            'red','red','red','red','red',
+            'red','red','red','red','red',
+            'red','red','red','red','red',
+            'red','red','red','red','red',
+          ],
+          borderWidth: 1
+        },
+        {
+          label: 'Shown',
+          data: totalShown,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+            'black','black','black','black','black','black',
+            'black','black','black','black','black','black',
+            'black','black','black','black','black','black',
+            'black','black','black','black','black','black'
+          ],
+          borderWidth: 1
+        }],
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+}
+
+
+
+//======================== chart.js ================================================
+
+
+
+// if (fruits.includes(fruit[1]))
+// {
+//   console.log('found bananas');
+// }
+// if(fruits.includes())
+// if(fruits.includes())
+// alert(fruits.includes("Banana")); // Outputs: true
+// alert(fruits.includes("Coconut")); // Outputs: false
+// alert(fruits.includes("Orange")); // Outputs: true
+// alert(fruits.includes("Cherry")); // Outputs: false
+
+randomPic();
+
+//============================ Old Code ============================================
+// Item.Item.Array = [];
+//var picCombosUsed = [];
+//var arrayIndex = 0;
+// var firstNum = randomizerForPics(0, Item.Array.length); // Get random numbers
+// var secondNum = randomizerForPics(0, Item.Array.length);
+// var thirdNum = randomizerForPics(0, Item.Array.length);
+
+// newNumbs = checkForDoubles(firstNum, secondNum, thirdNum); // check for doubles
+// newNumbs = checkIfUsed(newNumbs[0], newNumbs[1], newNumbs[2]); //check if combination of numbers has been used
+// picCombosUsed[arrayIndex] = [newNumbs[0], newNumbs[1], newNumbs[2]]; //add combination used to array
+// console.log('picCombosUsed..', picCombosUsed);
+// arrayIndex++; // increase arry index for above array
+
+//============= Not completely confident enough to get rid of code below yet==================================
+//===========================================================================================================
+// while(firstNum === secondNum || firstNum === thirdNum || secondNum === thirdNum || thirdNum === firstNum)
+// {
+//   firstNum = randomizerForPics(0, Item.Array.length);
+//   secondNum = randomizerForPics(0, Item.Array.length);
+//   thirdNum = randomizerForPics(0, Item.Array.length);
+// }
+ 
+// Creates a array of array for double checking if picture combo has been ran
+// picCombosUsed[arrayIndex] = [firstNum, secondNum, thirdNum,];
+  
+// for (var k in picCombosUsed)
+// {
+//   if((firstNum === picCombosUsed[k][0] || firstNum === picCombosUsed[k][1], firstNum === picCombosUsed[k][2]) && (secondNum === picCombosUsed[k][0] || secondNum === picCombosUsed[k][1], secondNum === picCombosUsed[k][2]) && (thirdNum === picCombosUsed[k][0] || thirdNum === picCombosUsed[k][1] || thirdNum === picCombosUsed[k][2] ))
+//   {
+
+//     do
+//     {
+//       firstNum = randomizerForPics(0, Item.Array.length);
+//       secondNum = randomizerForPics(0, Item.Array.length);
+//       thirdNum = randomizerForPics(0, Item.Array.length);
+//     }
+//     while(firstNum === secondNum || firstNum === thirdNum || secondNum === thirdNum || thirdNum === firstNum);
+//   }
+// }
 
 // function getNumbers(lastNums)
 // {
 //   do
 //   {
-//     var num1 = randomizerForPics(0, itemsArray.length); // Get random numbers
-//     var num2 = randomizerForPics(0, itemsArray.length);
-//     var num3 = randomizerForPics(0, itemsArray.length);
+//     var num1 = randomizerForPics(0, Item.Array.length); // Get random numbers
+//     var num2 = randomizerForPics(0, Item.Array.length);
+//     var num3 = randomizerForPics(0, Item.Array.length);
 //     var allNumbers = [num1, num2, num3];
 //     for(var i = 0; i < allNumbers.length; i++)
 //     {
 //       while(lastNums.includes(allNumbers[i]))
 //       {
-//         allNumbers[i] = randomizerForPics(0, itemsArray.length);
+//         allNumbers[i] = randomizerForPics(0, Item.Array.length);
 //       }
 //     }
 //   } while(allNumbers[0] === allNumbers[1] || allNumbers[0] === allNumbers[2] || allNumbers[1] === allNumbers[2]);
@@ -211,9 +363,9 @@ function getNumbers(lastNums)
 //     {// if number combo has been used get and make sure they aren't doubles
 //       do
 //       {
-//         num1 = randomizerForPics(0, itemsArray.length);
-//         num2 = randomizerForPics(0, itemsArray.length);
-//         num3 = randomizerForPics(0, itemsArray.length);
+//         num1 = randomizerForPics(0, Item.Array.length);
+//         num2 = randomizerForPics(0, Item.Array.length);
+//         num3 = randomizerForPics(0, Item.Array.length);
 //       }
 //       while(num1 === num2 || num1 === num3 || num2 === num3 || num3 === num1);
 //       checkIfUsed(num1, num2, num3); // check if new numbers have been used
@@ -230,69 +382,9 @@ function getNumbers(lastNums)
 // {
 //   while(num1 === num2 || num1 === num3 || num2 === num3)
 //   {
-//     num1 = randomizerForPics(0, itemsArray.length);
-//     num2 = randomizerForPics(0, itemsArray.length);
-//     num3 = randomizerForPics(0, itemsArray.length);
+//     num1 = randomizerForPics(0, Item.Array.length);
+//     num2 = randomizerForPics(0, Item.Array.length);
+//     num3 = randomizerForPics(0, Item.Array.length);
 //   }
 //   return [num1, num2, num3];
 // }
-
-//---------------------------------------------------------------------------
-function randomizerForPics(min ,max)
-{
-  return Math.floor(Math.random() * (max - min) + min); //returns a number between min and one less then max
-}
-
-//======================== chart.js ================================================
-var ctx = document.getElementById('clickChart').getContext('2d');
-var myChart = new Chart(ctx,
-  {
-    type: 'bar',
-    data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-      datasets: [{
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)'
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)'
-        ],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: true
-          }
-        }]
-      }
-    }
-  });
-
-
-// if (fruits.includes(fruit[1]))
-// {
-//   console.log('found bananas');
-// }
-// if(fruits.includes())
-// if(fruits.includes())
-// alert(fruits.includes("Banana")); // Outputs: true
-// alert(fruits.includes("Coconut")); // Outputs: false
-// alert(fruits.includes("Orange")); // Outputs: true
-// alert(fruits.includes("Cherry")); // Outputs: false
-
-randomPic();
