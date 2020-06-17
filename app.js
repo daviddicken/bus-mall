@@ -1,7 +1,7 @@
 'use strict';
 
 //======================= Variables ================================================
-Item.Array = [];
+var itemsArray = [];
 var totalClicks = 0;
 var maxClicks = 10;
 var lastNumbers = [];
@@ -16,7 +16,7 @@ function Item(imageSrc, caption)
   this.caption = caption;
   this.clicks = 0;
   this.shown = 0;
-  Item.Array.push(this);
+  itemsArray.push(this);
 }
 
 new Item('img/bag.jpg', 'R2-D2 Luggage');
@@ -41,6 +41,14 @@ new Item('img/usb.gif', 'USB Tentacle');
 new Item('img/water-can.jpg', 'Never Empty Water Can');
 new Item('img/wine-glass.jpg', 'AA members Wine Glass');
 
+var itemsFromStorage = localStorage.getItem('itemsInStorage');
+var newItemsArray = JSON.parse(itemsFromStorage);
+
+if(newItemsArray)
+{
+  itemsArray = newItemsArray;
+}
+
 //======================= Event Listeners ============================================
 
 var targetId = document.getElementById('pics'); // Targeting section with pics for event listener
@@ -54,13 +62,16 @@ function handleClickOnImg(event)
     totalClicks++; //                   tracks total number of clicks
     // console.log(event);
     var src = event.target.getAttribute('src'); //gets src from img clicked
-    for (var j in Item.Array) //                 cycles though Item. in array
+    for (var j in itemsArray) //                 cycles though Item. in array
     {
-      if(Item.Array[j].imageSrc === src) //      compares clicked img with array img
+      if(itemsArray[j].imageSrc === src) //      compares clicked img with array img
       {
-        Item.Array[j].clicks++; //               tracks clicks on image
+        itemsArray[j].clicks++; //               tracks clicks on image
       }
     }
+
+    var itemsStorage = JSON.stringify(itemsArray);
+    localStorage.setItem('itemsInStorage', itemsStorage);
 
     if(totalClicks === maxClicks) //    run code when max clicks is reached
     {
@@ -93,17 +104,17 @@ function randomPic()
   newNumbs = getNumbers(lastNumbers);
   lastNumbers = newNumbs;
   //keeps track of times shown
-  Item.Array[newNumbs[0]].shown++;
-  Item.Array[newNumbs[1]].shown++;
-  Item.Array[newNumbs[2]].shown++;
+  itemsArray[newNumbs[0]].shown++;
+  itemsArray[newNumbs[1]].shown++;
+  itemsArray[newNumbs[2]].shown++;
   //changes image and caption
-  img1.src = Item.Array[newNumbs[0]].imageSrc;
-  img2.src = Item.Array[newNumbs[1]].imageSrc;
-  img3.src = Item.Array[newNumbs[2]].imageSrc;
+  img1.src = itemsArray[newNumbs[0]].imageSrc;
+  img2.src = itemsArray[newNumbs[1]].imageSrc;
+  img3.src = itemsArray[newNumbs[2]].imageSrc;
   // changes picture captions
-  cap1.textContent = Item.Array[newNumbs[0]].caption;
-  cap2.textContent = Item.Array[newNumbs[1]].caption;
-  cap3.textContent = Item.Array[newNumbs[2]].caption;
+  cap1.textContent = itemsArray[newNumbs[0]].caption;
+  cap2.textContent = itemsArray[newNumbs[1]].caption;
+  cap3.textContent = itemsArray[newNumbs[2]].caption;
   console.log(newNumbs[0], newNumbs[1], newNumbs[2]);
 }
 //--------------------------------------------------------
@@ -112,17 +123,17 @@ function getNumbers(lastNums)
 {
   do
   {
-    var num1 = randomizerForPics(0, Item.Array.length);
+    var num1 = randomizerForPics(0, itemsArray.length);
   }while(lastNums.includes(num1));
 
   do
   {
-    var num2 = randomizerForPics(0, Item.Array.length);
+    var num2 = randomizerForPics(0, itemsArray.length);
   }while(num2 === num1 || lastNums.includes(num2));
 
   do
   {
-    var num3 = randomizerForPics(0, Item.Array.length);
+    var num3 = randomizerForPics(0, itemsArray.length);
   }while(num3 === num1 || num3 === num2 || lastNums.includes(num3));
   return [num1, num2, num3];
 }
@@ -135,9 +146,9 @@ function randomizerForPics(min ,max)
 function getCaptions()
 {
   var itemTitles = [];
-  for(var i in Item.Array)
+  for(var i in itemsArray)
   {
-    itemTitles.push(Item.Array[i].caption);
+    itemTitles.push(itemsArray[i].caption);
   }
   return itemTitles;
 }
@@ -145,9 +156,9 @@ function getCaptions()
 function getClicks()
 {
   var allClicks = [];
-  for(var i in Item.Array)
+  for(var i in itemsArray)
   {
-    allClicks.push(Item.Array[i].clicks);
+    allClicks.push(itemsArray[i].clicks);
   }
   return allClicks;
 }
@@ -155,9 +166,9 @@ function getClicks()
 function getShown()
 {
   var timesShown = [];
-  for(var i in Item.Array)
+  for(var i in itemsArray)
   {
-    timesShown.push(Item.Array[i].shown);
+    timesShown.push(itemsArray[i].shown);
   }
   return timesShown;
 }
@@ -178,30 +189,12 @@ function makeGraph()
           label: 'Clicks',
           data: clicksArray,
           backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)',
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)',
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)',
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
+            'red','red','red','red','red',
+            'red','red','red','red','red',
+            'red','red','red','red','red',
+            'red','red','red','red','red',
+            'red','red','red','red','red',
+            
           ],
           borderColor: [
             'red','red','red','red','red',
@@ -216,30 +209,10 @@ function makeGraph()
           label: 'Shown',
           data: totalShown,
           backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)',
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)',
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)',
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
+            'black','black','black','black','black','black',
+            'black','black','black','black','black','black',
+            'black','black','black','black','black','black',
+            'black','black','black','black','black','black'
           ],
           borderColor: [
             'black','black','black','black','black','black',
@@ -282,12 +255,12 @@ function makeGraph()
 randomPic();
 
 //============================ Old Code ============================================
-// Item.Item.Array = [];
+// Item.itemsArray = [];
 //var picCombosUsed = [];
 //var arrayIndex = 0;
-// var firstNum = randomizerForPics(0, Item.Array.length); // Get random numbers
-// var secondNum = randomizerForPics(0, Item.Array.length);
-// var thirdNum = randomizerForPics(0, Item.Array.length);
+// var firstNum = randomizerForPics(0, itemsArray.length); // Get random numbers
+// var secondNum = randomizerForPics(0, itemsArray.length);
+// var thirdNum = randomizerForPics(0, itemsArray.length);
 
 // newNumbs = checkForDoubles(firstNum, secondNum, thirdNum); // check for doubles
 // newNumbs = checkIfUsed(newNumbs[0], newNumbs[1], newNumbs[2]); //check if combination of numbers has been used
@@ -299,9 +272,9 @@ randomPic();
 //===========================================================================================================
 // while(firstNum === secondNum || firstNum === thirdNum || secondNum === thirdNum || thirdNum === firstNum)
 // {
-//   firstNum = randomizerForPics(0, Item.Array.length);
-//   secondNum = randomizerForPics(0, Item.Array.length);
-//   thirdNum = randomizerForPics(0, Item.Array.length);
+//   firstNum = randomizerForPics(0, itemsArray.length);
+//   secondNum = randomizerForPics(0, itemsArray.length);
+//   thirdNum = randomizerForPics(0, itemsArray.length);
 // }
  
 // Creates a array of array for double checking if picture combo has been ran
@@ -314,9 +287,9 @@ randomPic();
 
 //     do
 //     {
-//       firstNum = randomizerForPics(0, Item.Array.length);
-//       secondNum = randomizerForPics(0, Item.Array.length);
-//       thirdNum = randomizerForPics(0, Item.Array.length);
+//       firstNum = randomizerForPics(0, itemsArray.length);
+//       secondNum = randomizerForPics(0, itemsArray.length);
+//       thirdNum = randomizerForPics(0, itemsArray.length);
 //     }
 //     while(firstNum === secondNum || firstNum === thirdNum || secondNum === thirdNum || thirdNum === firstNum);
 //   }
@@ -326,15 +299,15 @@ randomPic();
 // {
 //   do
 //   {
-//     var num1 = randomizerForPics(0, Item.Array.length); // Get random numbers
-//     var num2 = randomizerForPics(0, Item.Array.length);
-//     var num3 = randomizerForPics(0, Item.Array.length);
+//     var num1 = randomizerForPics(0, itemsArray.length); // Get random numbers
+//     var num2 = randomizerForPics(0, itemsArray.length);
+//     var num3 = randomizerForPics(0, itemsArray.length);
 //     var allNumbers = [num1, num2, num3];
 //     for(var i = 0; i < allNumbers.length; i++)
 //     {
 //       while(lastNums.includes(allNumbers[i]))
 //       {
-//         allNumbers[i] = randomizerForPics(0, Item.Array.length);
+//         allNumbers[i] = randomizerForPics(0, itemsArray.length);
 //       }
 //     }
 //   } while(allNumbers[0] === allNumbers[1] || allNumbers[0] === allNumbers[2] || allNumbers[1] === allNumbers[2]);
@@ -363,9 +336,9 @@ randomPic();
 //     {// if number combo has been used get and make sure they aren't doubles
 //       do
 //       {
-//         num1 = randomizerForPics(0, Item.Array.length);
-//         num2 = randomizerForPics(0, Item.Array.length);
-//         num3 = randomizerForPics(0, Item.Array.length);
+//         num1 = randomizerForPics(0, itemsArray.length);
+//         num2 = randomizerForPics(0, itemsArray.length);
+//         num3 = randomizerForPics(0, itemsArray.length);
 //       }
 //       while(num1 === num2 || num1 === num3 || num2 === num3 || num3 === num1);
 //       checkIfUsed(num1, num2, num3); // check if new numbers have been used
@@ -382,9 +355,9 @@ randomPic();
 // {
 //   while(num1 === num2 || num1 === num3 || num2 === num3)
 //   {
-//     num1 = randomizerForPics(0, Item.Array.length);
-//     num2 = randomizerForPics(0, Item.Array.length);
-//     num3 = randomizerForPics(0, Item.Array.length);
+//     num1 = randomizerForPics(0, itemsArray.length);
+//     num2 = randomizerForPics(0, itemsArray.length);
+//     num3 = randomizerForPics(0, itemsArray.length);
 //   }
 //   return [num1, num2, num3];
 // }
