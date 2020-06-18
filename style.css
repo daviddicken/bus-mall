@@ -2,43 +2,29 @@ body{
   background-color: lightgray;
 }
 section{
-  border: solid black 2px;
+  /* border: solid black 2px; */
   position: relative;
-  overflow: hidden;
+  overflow: hidden
   width: 960px;
   margin: auto;
   text-align: center;
 }
 
 div{
-  border: solid red 2px;
+  /* border: solid red 2px; */
+  float: left;
+  /* height: 240; */
 }
 
 img{
-  border: solid blue 2px;
-  margin: auto;
   width: 200px;
+  height: 200px;
 }
 
-p{
-  border: solid green 2px;
+#pics{
+  float: left;
 }
 
-h1{
-  border: dashed grey 2px;
-}
-
-h2{
-  border: dashed gray 2px;
-}
-
-ul{
-  border: solid orange 2px;
-}
-li{
-  border: solid yellow 2px;
-}
-/* ======================================================================================= */
 section> *{
   float: left;
 }
