@@ -3,11 +3,12 @@
 //======================= Variables ================================================
 var itemsArray = [];
 var totalClicks = 0;
-var maxClicks = 10;
+var maxClicks = 20;
 var lastNumbers = [];
 var titles = [];
 var clicksArray = [];
 var totalShown = [];
+var images2show = 3;
 
 //======================= Constructor's =============================================
 function Item(imageSrc, caption)
@@ -41,7 +42,7 @@ new Item('img/usb.gif', 'USB Tentacle');
 new Item('img/water-can.jpg', 'Never Empty Water Can');
 new Item('img/wine-glass.jpg', 'AA members Wine Glass');
 
-var itemsFromStorage = localStorage.getItem('itemsInStorage');
+var itemsFromStorage = localStorage.getItem('itemsInStorage'); 
 var newItemsArray = JSON.parse(itemsFromStorage);
 
 if(newItemsArray)
@@ -98,11 +99,10 @@ function randomPic()
   var cap1 = document.getElementById('cap1');
   var cap2 = document.getElementById('cap2');
   var cap3 = document.getElementById('cap3');
-  //debugger;
+
   var newNumbs = [];
 
-  newNumbs = getNumbers(lastNumbers);
-  lastNumbers = newNumbs;
+  newNumbs = getNumbers();
   //keeps track of times shown
   itemsArray[newNumbs[0]].shown++;
   itemsArray[newNumbs[1]].shown++;
@@ -119,24 +119,32 @@ function randomPic()
 }
 //--------------------------------------------------------
 //https://www.tutorialrepublic.com/faq/how-to-check-if-a-value-exists-in-an-array-in-javascript.php
-function getNumbers(lastNums)
+function getNumbers()
 {
-  do
-  {
-    var num1 = randomizerForPics(0, itemsArray.length);
-  }while(lastNums.includes(num1));
+  do{
+    var numbers = [];
+    var alreadyUsed = false;
+    for(var i = images2show; i > 0; i--)
+    {
+      do{
+        var num = randomizerForPics(0, itemsArray.length);
+      }while(numbers.includes(num));
+      numbers.push(num);
+    }
 
-  do
-  {
-    var num2 = randomizerForPics(0, itemsArray.length);
-  }while(num2 === num1 || lastNums.includes(num2));
+    for(var j in numbers)
+    {
+      if (lastNumbers.includes(numbers[j]))
+      {
+        alreadyUsed = true;
+      }
+    }
+  }while(alreadyUsed === true);
 
-  do
-  {
-    var num3 = randomizerForPics(0, itemsArray.length);
-  }while(num3 === num1 || num3 === num2 || lastNums.includes(num3));
-  return [num1, num2, num3];
+  lastNumbers = numbers;
+  return numbers;
 }
+
 //---------------------------------------------------------------------------
 function randomizerForPics(min ,max)
 {
@@ -194,7 +202,6 @@ function makeGraph()
             'red','red','red','red','red',
             'red','red','red','red','red',
             'red','red','red','red','red',
-            
           ],
           borderColor: [
             'red','red','red','red','red',
@@ -235,9 +242,11 @@ function makeGraph()
     });
 }
 
+randomPic();
 
-
-//======================== chart.js ================================================
+//=====================================================================
+//=====================================================================
+//======================= OLD CODE ====================================
 
 
 
@@ -252,7 +261,7 @@ function makeGraph()
 // alert(fruits.includes("Orange")); // Outputs: true
 // alert(fruits.includes("Cherry")); // Outputs: false
 
-randomPic();
+
 
 //============================ Old Code ============================================
 // Item.itemsArray = [];
