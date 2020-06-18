@@ -96,18 +96,17 @@ function handleClickOnImg(event)
 //--------------------------------------
 function dynamicPics()
 {
-  document.getElementById('pics').innerHTML = '';
-  var newNumbs = [];
+  document.getElementById('pics').innerHTML = ''; // clears old pics
+  //var newNumbs = []; // set variable to to store num
 
-  newNumbs = getNumbers();
+  var newNumbs = getNumbers(); //get random numbers
 
   for(var i in newNumbs)
   {
-    var sec = document.getElementById('pics');
-    var div = document.createElement('div');
-    var pTag = document.createElement('p');
-    pTag.textContent = itemsArray[newNumbs[i]].caption;
-    console.log('caption', pTag.textContent);
+    var sec = document.getElementById('pics'); //find section to place images
+    var div = document.createElement('div'); // create div to hold img and caption
+    var pTag = document.createElement('p'); // create pTag for caption
+    pTag.textContent = itemsArray[newNumbs[i]].caption; //put content in pTag
     var img = document.createElement('img');
     img.src = itemsArray[newNumbs[i]].imageSrc;
     div.appendChild(img);
