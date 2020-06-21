@@ -1,5 +1,4 @@
 'use strict';
-
 //======================= Variables ================================================
 var itemsArray = [];
 var totalClicks = 0;
@@ -39,8 +38,8 @@ new Item('img/usb.gif', 'USB Tentacle');
 new Item('img/water-can.jpg', 'Never Empty Water Can');
 new Item('img/wine-glass.jpg', 'AA members Wine Glass');
 
-var itemsFromStorage = localStorage.getItem('itemsInStorage'); 
-var newItemsArray = JSON.parse(itemsFromStorage);
+var itemsFromStorage = localStorage.getItem('itemsInStorage'); //get from locale storage
+var newItemsArray = JSON.parse(itemsFromStorage); // unstring
 
 if(newItemsArray)
 {
@@ -73,15 +72,16 @@ function handleClickOnImg(event)
     if(totalClicks === maxClicks) //    run code when max clicks is reached
     {
       targetId.removeEventListener('click', handleClickOnImg); // removes listenere
-      document.getElementById('theH1').textContent ='The Results of Your Clicking: ';
+      // change h1 text
+      document.getElementById('theH1').textContent ='The Results of Your Clicking:';
 
       //https://stackoverflow.com/questions/5780921/how-to-hide-all-images-using-javascript
-      var images = document.getElementsByTagName('img');
+      var images = document.getElementsByTagName('img'); // clears imgs
       for (var i = 0; i < images.length; i++)
       {
         images[i].style.display = 'none';
       }
-      var captions = document.getElementsByTagName('p');
+      var captions = document.getElementsByTagName('p'); //clears captions
       for (var k = 0; k < images.length; k++)
       {
         captions[k].style.display = 'none';
@@ -97,7 +97,6 @@ function handleClickOnImg(event)
 function dynamicPics()
 {
   document.getElementById('pics').innerHTML = ''; // clears old pics
-  //var newNumbs = []; // set variable to to store num
 
   var newNumbs = getNumbers(); //get random numbers
 
@@ -106,14 +105,14 @@ function dynamicPics()
     var sec = document.getElementById('pics'); //find section to place images
     var div = document.createElement('div'); // create div to hold img and caption
     var pTag = document.createElement('p'); // create pTag for caption
-    pTag.textContent = itemsArray[newNumbs[i]].caption; //put content in pTag
-    var img = document.createElement('img');
-    img.src = itemsArray[newNumbs[i]].imageSrc;
-    div.appendChild(img);
-    div.appendChild(pTag);
-    sec.appendChild(div);
+    pTag.textContent = itemsArray[newNumbs[i]].caption; //put caption for img in pTag
+    var img = document.createElement('img'); // create img element
+    img.src = itemsArray[newNumbs[i]].imageSrc; // put path to img on element
+    div.appendChild(img); // attach img to div
+    div.appendChild(pTag); // attach pTag to div
+    sec.appendChild(div); // attach div to section
 
-    itemsArray[newNumbs[i]].shown++;
+    itemsArray[newNumbs[i]].shown++; // increment number of times img was shown
   }
 }
 //----------------------------------------------------------------------------------
@@ -121,26 +120,26 @@ function dynamicPics()
 function getNumbers() //This might be different but is thanks to Matthew Herriges awesome do loop
 {
   do{
-    var numbers = [];
-    var alreadyUsed = false;
-    for(var i = images2show; i > 0; i--)
+    var numbers = []; // create array for numbers
+    var alreadyUsed = false; // set flag
+    for(var i = images2show; i > 0; i--) //get as many numbers as set in images2show
     {
       do{
-        var num = randomizerForPics(0, itemsArray.length);
-      }while(numbers.includes(num));
-      numbers.push(num);
+        var num = randomizerForPics(0, itemsArray.length); //get random #
+      }while(numbers.includes(num)); // check for doubles
+      numbers.push(num); //add to numbers array
     }
 
-    for(var j in numbers)
+    for(var j in numbers) //loop through each number in array
     {
-      if (lastNumbers.includes(numbers[j]))
+      if (lastNumbers.includes(numbers[j])) //check if number was used last time
       {
-        alreadyUsed = true;
+        alreadyUsed = true; // set flag to true if number was found
       }
     }
-  }while(alreadyUsed === true);
+  }while(alreadyUsed === true); // get new numbers if flag was set to true
 
-  lastNumbers = numbers;
+  lastNumbers = numbers; //set new numbers to last numbers array
   return numbers;
 }
 
@@ -152,12 +151,13 @@ function randomizerForPics(min ,max)
 //------------------------------------------------------------------
 function makeGraph()
 {
+  //variables to load with data for chart
   var titles = [];
   var allClicks = [];
   var totalShown = [];
 
   for(var i in itemsArray)
-  {
+  { // push data for each item into array
     totalShown.push(itemsArray[i].shown);
     allClicks.push(itemsArray[i].clicks);
     titles.push(itemsArray[i].caption);
@@ -192,16 +192,18 @@ function makeGraph()
           label: 'Shown',
           data: totalShown,
           backgroundColor: [
-            'black','black','black','black','black','black',
-            'black','black','black','black','black','black',
-            'black','black','black','black','black','black',
-            'black','black','black','black','black','black'
+            'yellow','yellow','yellow','yellow','yellow',
+            'yellow','yellow','yellow','yellow','yellow',
+            'yellow','yellow','yellow','yellow','yellow',
+            'yellow','yellow','yellow','yellow','yellow',
+            'yellow','yellow','yellow','yellow','yellow',
           ],
           borderColor: [
-            'black','black','black','black','black','black',
-            'black','black','black','black','black','black',
-            'black','black','black','black','black','black',
-            'black','black','black','black','black','black'
+            'yellow','yellow','yellow','yellow','yellow',
+            'yellow','yellow','yellow','yellow','yellow',
+            'yellow','yellow','yellow','yellow','yellow',
+            'yellow','yellow','yellow','yellow','yellow',
+            'yellow','yellow','yellow','yellow','yellow',
           ],
           borderWidth: 1
         }],
